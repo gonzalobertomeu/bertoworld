@@ -1,0 +1,2 @@
+CREATE USER auth_service WITH PASSWORD 'jdHG6f09YXAP/0r1FWOUY71yacB3jDXubZ7EHsl9ewQ=';
+CREATE DATABASE auth OWNER auth_service;

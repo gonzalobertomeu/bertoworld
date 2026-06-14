@@ -1,0 +1,33 @@
+services:
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  auth:
+    build:
+      dockerfile: bun.base.dockerfile
+      context: .
+    volumes:
+      - ../:/usr/src/app
+    command: bun dev:auth
+    environment:
+      DATABASE_URL: postgresql://auth_user:auth_pass@postgres:5432/auth_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
