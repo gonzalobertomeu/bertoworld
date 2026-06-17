@@ -1,9 +1,12 @@
 COMPOSE=docker compose -f infrastructure/compose.yml -p bertoworld
 
-.PHONY: up down build logs restart ps
+.PHONY: up up-build down build logs restart ps
 
 up:
 	$(COMPOSE) up -d
+
+up-build:
+	$(COMPOSE) up --build -d
 
 down:
 	$(COMPOSE) down

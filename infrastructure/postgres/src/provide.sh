@@ -27,7 +27,7 @@ echo "---"
 for file in "${sql_files[@]}"; do
   echo "Ejecutando: $(basename "$file")..."
 
-  PGPASSWORD="${DB_PASSWORD:-}" psql \
+  PGPASSWORD="$DB_PASS" psql \
     -h "$DB_HOST" \
     -p "$DB_PORT" \
     -U "$DB_USER" \

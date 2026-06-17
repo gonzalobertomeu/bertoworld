@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { getDatabaseConfig } from './Database.config';
+import { DatabaseConfig, DatabaseConfigPostgres } from './Database.config';
 
-export const DATABASE_CONFIG = Symbol('DatabaseConfig');
 @Module({
-  providers: [{ provide: DATABASE_CONFIG, useFactory: getDatabaseConfig }],
-  exports: [DATABASE_CONFIG],
+  providers: [
+    {
+      provide: DatabaseConfig,
+      useFactory: () => DatabaseConfigPostgres.create(),
+    },
+  ],
+  exports: [DatabaseConfig],
 })
 export class ConfigModule {}

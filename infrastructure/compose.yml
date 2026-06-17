@@ -36,7 +36,12 @@ services:
       - ../:/usr/src/app
     command: bun dev:auth
     environment:
-      DATABASE_URL: postgresql://auth_user:auth_pass@database:5432/auth_db
+      DB_DRIVER: postgres
+      DB_PASS: jdHG6f09YXAP/0r1FWOUY71yacB3jDXubZ7EHsl9ewQ=
+      DB_USER: auth_service
+      DB_HOST: database
+      DB_NAME: auth
+
     depends_on:
       provision:
         condition: service_completed_successfully
