@@ -12,5 +12,7 @@ export const DatabaseModule = TypeOrmModule.forRootAsync({
     password: config.pass,
     port: Number(config.port),
     type: config.driver,
+    synchronize: true,
+    autoLoadEntities: true,
   }),
 });
