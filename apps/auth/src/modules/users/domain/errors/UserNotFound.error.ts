@@ -1,6 +1,8 @@
-export class UserNotFound extends Error {
+import { DomainError } from './DomainError.error';
+
+export class UserNotFound extends DomainError {
   constructor(id: string) {
-    super(`Userl ${id} not found`);
+    super(`User ${id} not found`);
     this.name = 'UserNotFound';
   }
 }

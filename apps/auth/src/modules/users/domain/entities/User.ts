@@ -55,6 +55,10 @@ export class User {
     return this._createdAt;
   }
 
+  get password() {
+    return this._password;
+  }
+
   async checkPassword(pass: string, hasher: Hasher) {
     return await hasher.compare(pass, this._password);
   }
