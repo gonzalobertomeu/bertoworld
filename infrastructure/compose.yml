@@ -1,4 +1,10 @@
 services:
+  broker:
+    image: nats
+    ports:
+      - '8222:8222'
+    networks:
+      - brtwlrd
   database:
     image: postgres:17-alpine
     environment:
@@ -13,6 +19,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - brtwlrd
 
   provision:
     build:
@@ -27,6 +35,8 @@ services:
       database:
         condition: service_healthy
     restart: 'no'
+    networks:
+      - brtwlrd
 
   auth:
     build:
@@ -34,7 +44,7 @@ services:
       context: .
     volumes:
       - ../:/usr/src/app
-    command: bun dev:auth
+    command: bun micro:auth
     environment:
       DB_DRIVER: postgres
       DB_PASS: jdHG6f09YXAP/0r1FWOUY71yacB3jDXubZ7EHsl9ewQ=
@@ -45,6 +55,30 @@ services:
     depends_on:
       provision:
         condition: service_completed_successfully
+      broker:
+        condition: service_started
+    networks:
+      - brtwlrd
+
+  gateway:
+    build:
+      dockerfile: bun.base.dockerfile
+      context: .
+    volumes:
+      - ../:/usr/src/app
+    command: bun micro:gateway
+    depends_on:
+      provision:
+        condition: service_completed_successfully
+      broker:
+        condition: service_started
+    networks:
+      - brtwlrd
+    ports:
+      - '3000:3000'
 
 volumes:
   postgres_data:
+
+networks:
+  brtwlrd:
