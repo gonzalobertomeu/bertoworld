@@ -5,6 +5,8 @@ import { useCases } from '../application/usecases.barrel';
 import { UserRepository } from '../domain/repositories/User.repository';
 import { UserRepositoryOrm } from './persistence/User.repository-orm';
 import { UserNatsController } from './presenters/users.nats';
+import { Hasher } from '../domain/ports/Hasher';
+import { HasherArgon } from './adapters/Hasher.argon';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -12,6 +14,10 @@ import { UserNatsController } from './presenters/users.nats';
     {
       provide: UserRepository,
       useClass: UserRepositoryOrm,
+    },
+    {
+      provide: Hasher,
+      useClass: HasherArgon,
     },
     ...useCases,
   ],

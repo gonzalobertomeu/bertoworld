@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '../domain/entities/User';
-import { EmailAlreadyTaken } from '../domain/errors/EmailAlreadyTaken.error';
-import { Hasher } from '../domain/ports/Hasher';
-import { UserRepository } from '../domain/repositories/User.repository';
+import { User } from '../../domain/entities/User';
+import { EmailAlreadyTaken } from '../../domain/errors/EmailAlreadyTaken.error';
+import { Hasher } from '../../domain/ports/Hasher';
+import { UserRepository } from '../../domain/repositories/User.repository';
 
 export interface CreateUserCommand {
   email: string;

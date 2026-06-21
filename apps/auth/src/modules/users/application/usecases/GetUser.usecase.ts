@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserRepository } from '../domain/repositories/User.repository';
-import { UserNotFound } from '../domain/errors/UserNotFound.error';
+import { UserRepository } from '../../domain/repositories/User.repository';
+import { UserNotFound } from '../../domain/errors/UserNotFound.error';
 
 export interface GetUserCommand {
   email?: string;

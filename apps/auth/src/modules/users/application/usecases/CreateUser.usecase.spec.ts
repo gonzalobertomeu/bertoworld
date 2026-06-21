@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test';
-import { UserRepository } from '../domain/repositories/User.repository';
-import { Hasher } from '../domain/ports/Hasher';
-import { User } from '../domain/entities/User';
+import { UserRepository } from '../../domain/repositories/User.repository';
+import { Hasher } from '../../domain/ports/Hasher';
+import { User } from '../../domain/entities/User';
 import { CreateUserUseCase } from './CreateUser.usecase';
-import { EmailAlreadyTaken } from '../domain/errors/EmailAlreadyTaken.error';
+import { EmailAlreadyTaken } from '../../domain/errors/EmailAlreadyTaken.error';
+
 describe('CreateUser', () => {
   let hasherMock: Hasher;
   let userRepoMock: UserRepository;

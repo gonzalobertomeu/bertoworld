@@ -1,8 +1,8 @@
 import { describe, it, expect, mock, beforeEach } from 'bun:test';
-import { UserRepository } from '../domain/repositories/User.repository';
+import { UserRepository } from '../../domain/repositories/User.repository';
 import { GetUserUseCase } from './GetUser.usecase';
-import { User } from '../domain/entities/User';
-import { UserNotFound } from '../domain/errors/UserNotFound.error';
+import { User } from '../../domain/entities/User';
+import { UserNotFound } from '../../domain/errors/UserNotFound.error';
 
 describe('GetUser', () => {
   let userRepoMock: UserRepository;
