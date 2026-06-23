@@ -40,7 +40,12 @@ describe('CreateUser', () => {
         });
         return Promise.resolve(user);
       }),
-      save: mock(() => Promise.resolve()),
+      save: mock((user: User) => {
+        if (user.email == 'fail@test.com') {
+          throw new EmailAlreadyTaken(user.email);
+        }
+        return Promise.resolve();
+      }),
     };
     usecase = new CreateUserUseCase(userRepoMock, hasherMock);
   });
@@ -48,5 +53,10 @@ describe('CreateUser', () => {
     expect(
       usecase.execute({ email: 'fail@test.com', password: '123' }),
     ).rejects.toThrow(EmailAlreadyTaken);
+  });
+  it('should create user', () => {
+    expect(
+      usecase.execute({ email: 'user@test.com', password: '1234' }),
+    ).resolves.toBeInstanceOf(User);
   });
 });

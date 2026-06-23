@@ -20,6 +20,7 @@ export class UserRepositoryOrm implements UserRepository {
       throw new UserAlreadyExists(user.id);
     }
     const existingEmail = await this.userRepo.findOneBy({ email: user.email });
+    console.log(existingEmail);
     if (existingEmail) {
       throw new EmailAlreadyTaken(user.email);
     }

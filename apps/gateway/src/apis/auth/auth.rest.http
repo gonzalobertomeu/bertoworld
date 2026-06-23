@@ -6,6 +6,6 @@ POST localhost:3000/auth/create HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "ggbertomeu@gmail.com",
+  "email": "gbertomeu@gmail.com",
   "password": "kinga1234"
 }

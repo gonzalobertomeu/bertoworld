@@ -1,4 +1,5 @@
 import { Hasher } from '../../domain/ports/Hasher';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class HasherArgon extends Hasher {
