@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Inject,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -18,5 +20,9 @@ export class AuthController {
   @Post('/auth/create')
   createUser(@Body() body: CreateUserCommandHTTP) {
     return this.authRemote.send('auth.createUser', body);
+  }
+  @Get('/auth/:id')
+  getUser(@Param('id') id: string) {
+    return this.authRemote.send('auth.getUser', { id });
   }
 }

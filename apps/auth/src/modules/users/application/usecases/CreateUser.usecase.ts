@@ -18,6 +18,6 @@ export class CreateUserUseCase {
   async execute(props: CreateUserCommand) {
     const user = await User.create(props.email, props.password, this.hasher);
     await this.userRepo.save(user);
-    return user;
+    return user.public();
   }
 }

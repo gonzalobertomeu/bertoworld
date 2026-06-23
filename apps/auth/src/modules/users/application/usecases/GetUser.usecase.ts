@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from '../../domain/repositories/User.repository';
 import { UserNotFound } from '../../domain/errors/UserNotFound.error';
 
-export interface GetUserCommand {
+export interface GetUserQuery {
   email?: string;
   id?: string;
 }
@@ -11,16 +11,16 @@ export interface GetUserCommand {
 export class GetUserUseCase {
   constructor(private userRepo: UserRepository) {}
 
-  async execute(props: GetUserCommand) {
+  async execute(props: GetUserQuery) {
     if (props.id) {
       const user = await this.userRepo.get(props.id);
       if (!user) throw new UserNotFound(props.id);
-      return user;
+      return user.public();
     }
     if (props.email) {
       const user = await this.userRepo.findByEmail(props.email);
       if (!user) throw new UserNotFound(props.email);
-      return user;
+      return user.public();
     }
     throw new BadRequestException('Email or Id must be passed');
   }

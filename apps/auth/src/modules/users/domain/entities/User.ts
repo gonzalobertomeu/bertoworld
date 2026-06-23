@@ -1,3 +1,4 @@
+import { UserNotActive } from '../errors/UserNotActive.error';
 import { Hasher } from '../ports/Hasher';
 export interface UserProps {
   id: string;
@@ -6,6 +7,12 @@ export interface UserProps {
   isActive: boolean;
   isValidated: boolean;
   createdAt: Date;
+}
+
+export interface PublicUser {
+  id: string;
+  email: string;
+  isValidated: boolean;
 }
 export class User {
   private constructor(
@@ -57,6 +64,17 @@ export class User {
 
   get password() {
     return this._password;
+  }
+
+  public(): PublicUser {
+    if (!this.isActive) {
+      throw new UserNotActive(this.id);
+    }
+    return {
+      id: this.id,
+      email: this.email,
+      isValidated: this.isValidated,
+    };
   }
 
   async checkPassword(pass: string, hasher: Hasher) {
