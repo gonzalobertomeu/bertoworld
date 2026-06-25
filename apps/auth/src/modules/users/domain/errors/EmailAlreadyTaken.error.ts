@@ -1,4 +1,4 @@
-import { DomainError } from './DomainError.error';
+import { DomainError } from '@bertoworld/shared/errors/DomainError.error';
 
 export class EmailAlreadyTaken extends DomainError {
   constructor(email: string) {

@@ -21,6 +21,13 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "paths": {
+      "@bertoworld/shared": [
+        "libs/shared/src"
+      ],
+      "@bertoworld/shared/*": [
+        "libs/shared/src/*"
+      ]
+    }
   }
 }
