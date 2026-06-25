@@ -15,12 +15,12 @@ export class GetUserUseCase {
     if (props.id) {
       const user = await this.userRepo.get(props.id);
       if (!user) throw new UserNotFound(props.id);
-      return user.public();
+      return user;
     }
     if (props.email) {
       const user = await this.userRepo.findByEmail(props.email);
       if (!user) throw new UserNotFound(props.email);
-      return user.public();
+      return user;
     }
     throw new BadRequestException('Email or Id must be passed');
   }

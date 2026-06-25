@@ -13,14 +13,13 @@ export class UserNatsController {
   ) {}
   @MessagePattern('auth.createUser')
   async createUser(@Payload() props: CreateUserCommand) {
-    const result = await this.createUserUseCase.execute(props);
-    console.log({ result });
-    return result;
+    const user = await this.createUserUseCase.execute(props);
+    return user.public();
   }
 
   @MessagePattern('auth.getUser')
   async getUser(@Payload() props: { id: string }) {
-    const result = await this.getUserUseCase.execute({ id: props.id });
-    return result;
+    const user = await this.getUserUseCase.execute({ id: props.id });
+    return user.public();
   }
 }
