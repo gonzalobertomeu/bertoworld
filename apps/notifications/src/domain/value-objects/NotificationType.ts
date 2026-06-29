@@ -1,18 +1,19 @@
 import { InvalidNotificationType } from '../errors/InvalidNotificationType.error';
 
-export type NotificationTypeString = (typeof NotificationType.TYPES)[number];
-
+export type NotificationTypeString = (typeof NotificationType)['ENUM'];
 export class NotificationType {
-  readonly value: string;
-  private constructor(value: string) {
-    if (!(NotificationType.TYPES as readonly string[]).includes(value)) {
-      throw new InvalidNotificationType(value);
+  private static ENUM = ['VALIDATE_USER', 'PASSWORD_RESET'] as const;
+  private constructor(private readonly value: string) {}
+
+  public static from(type: string) {
+    if (
+      !(NotificationType.ENUM as readonly string[]).includes(type.toUpperCase())
+    ) {
+      throw new InvalidNotificationType(type);
     }
-    this.value = value;
+    return new NotificationType(type.toUpperCase());
   }
-
-  static TYPES = ['VALIDATE_USER', 'PASSWORD_RESET'] as const;
-
-  static VALIDATE_USER = new NotificationType('VALIDATE_USER');
-  static PASSWORD_RESET = new NotificationType('PASSWORD_RESET');
+  public get type() {
+    return this.value;
+  }
 }

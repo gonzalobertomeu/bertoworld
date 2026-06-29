@@ -1,17 +1,11 @@
-import {
-  NotificationChannel,
-  NotificationChannelString,
-} from '../value-objects/NotificationChannel';
+import { NotificationChannel } from '../value-objects/NotificationChannel';
 import { NotificationStatus } from '../value-objects/NotificationStatus';
-import {
-  NotificationType,
-  NotificationTypeString,
-} from '../value-objects/NotificationType';
+import { NotificationType } from '../value-objects/NotificationType';
 
 export interface NotificationCreateProp {
   recipientId: string;
-  type: NotificationTypeString;
-  channel: NotificationChannelString;
+  type: string;
+  channel: string;
   payload: Record<string, any>;
   sentAt: Date;
 }
@@ -34,9 +28,9 @@ export class Notification {
     return new Notification(
       crypto.randomUUID(),
       create.recipientId,
-      NotificationType[create.type],
-      NotificationChannel[create.channel],
-      NotificationStatus['PENDING'],
+      NotificationType.from(create.type),
+      NotificationChannel.from(create.channel),
+      NotificationStatus.from('PENDING'),
       create.payload,
       create.sentAt ?? now,
       now,
@@ -48,9 +42,9 @@ export class Notification {
     return {
       id: this._id,
       recipientId: this._recipientId,
-      type: this._type,
-      channel: this._channel,
-      status: this._status,
+      type: this._type.type,
+      channel: this._channel.channel,
+      status: this._status.status,
       payload: this._payload,
       sentAt: this._sentAt,
       createdAt: this._createdAt,
