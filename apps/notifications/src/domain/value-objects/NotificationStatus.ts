@@ -26,12 +26,16 @@ export class NotificationStatus {
     return new NotificationStatus(status.toUpperCase());
   }
 
-  public to(next: NotificationStatusString): NotificationStatus {
+  public to(next: string): NotificationStatus {
     const allowed = NotificationStatus.TRANSITIONS[this.value];
-    if (!allowed.includes(next)) {
+    const nextParsed = next.toUpperCase();
+    if (
+      !(NotificationStatus.ENUM as readonly string[]).includes(nextParsed) ||
+      !allowed.includes(nextParsed)
+    ) {
       throw new InvalidStatusTransition(this.value, next);
     }
-    return new NotificationStatus(next);
+    return new NotificationStatus(nextParsed);
   }
 
   public equals(compare: NotificationStatus): boolean {
