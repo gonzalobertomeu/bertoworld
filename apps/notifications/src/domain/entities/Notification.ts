@@ -38,7 +38,39 @@ export class Notification {
     );
   }
 
-  primitive() {
+  toStatus(next: string) {
+    this._status = this._status.to(next);
+  }
+
+  public get id() {
+    return this._id;
+  }
+  public get recipientId() {
+    return this._recipientId;
+  }
+  public get type() {
+    return this._type.type;
+  }
+  public get status() {
+    return this._status.status;
+  }
+  public get channel() {
+    return this._channel.channel;
+  }
+  public get payload() {
+    return this._payload;
+  }
+  public get sentAt() {
+    return this._sentAt;
+  }
+  public get createdAt() {
+    return this._createdAt;
+  }
+  public get readAt() {
+    return this._readAt;
+  }
+
+  public primitive() {
     return {
       id: this._id,
       recipientId: this._recipientId,
