@@ -1,3 +1,4 @@
+import { InvalidReadDate } from '../errors/InvalidReadDate.error';
 import { NotificationChannel } from '../value-objects/NotificationChannel';
 import { NotificationStatus } from '../value-objects/NotificationStatus';
 import { NotificationType } from '../value-objects/NotificationType';
@@ -38,8 +39,15 @@ export class Notification {
     );
   }
 
-  toStatus(next: string) {
+  public toStatus(next: string) {
     this._status = this._status.to(next);
+  }
+
+  public read(time: Date) {
+    if (this._sentAt.getTime() > time.getTime()) {
+      throw new InvalidReadDate(time);
+    }
+    this._readAt = time;
   }
 
   public get id() {

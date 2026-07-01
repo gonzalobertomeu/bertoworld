@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from 'bun:test';
 import { Notification, NotificationCreateProp } from './Notification';
 import { InvalidStatusTransition } from '../errors/InvalidStatusTransition.error';
+import { InvalidReadDate } from '../errors/InvalidReadDate.error';
 
 describe('Notification', () => {
   let now: Date;
@@ -62,5 +63,19 @@ describe('Notification', () => {
         });
       });
     }
+  });
+
+  it('should mark as read', () => {
+    const readDate = new Date();
+    notification.read(readDate);
+    expect(notification.readAt).toEqual(readDate);
+  });
+
+  it('should not read notification before creation', () => {
+    const readDate = new Date(now.getTime() - 20000);
+    const fn = () => {
+      notification.read(readDate);
+    };
+    expect(fn).toThrow(InvalidReadDate);
   });
 });
