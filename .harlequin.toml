@@ -7,6 +7,6 @@ limit = 100000
 keymap_name = ["vscode"]
 host = "localhost"
 port = "5555"
-dbname = "auth"
+dbname = "notifications"
 user = "postgres"
 password = "postgres"
