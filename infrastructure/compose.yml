@@ -51,7 +51,27 @@ services:
       DB_USER: auth_service
       DB_HOST: database
       DB_NAME: auth
+    depends_on:
+      provision:
+        condition: service_completed_successfully
+      broker:
+        condition: service_started
+    networks:
+      - brtwlrd
 
+  notifications:
+    build:
+      dockerfile: bun.base.dockerfile
+      context: .
+    volumes:
+      - ../:/usr/src/app
+    command: bun micro:notifications
+    environment:
+      DB_DRIVER: postgres
+      DB_PASS: UYCpoTNACmNXcYHeREBb/hZP7DZ2pTe1fKtgwSwgcm0=
+      DB_USER: notifications_service
+      DB_HOST: database
+      DB_NAME: notifications
     depends_on:
       provision:
         condition: service_completed_successfully
