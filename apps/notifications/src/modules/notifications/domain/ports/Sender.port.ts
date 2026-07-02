@@ -1,3 +1,5 @@
+import { Notification } from '../entities/Notification';
+
 export abstract class Sender {
-  // Bridge Abstraction
+  abstract send(notification: Notification): Promise<void>;
 }

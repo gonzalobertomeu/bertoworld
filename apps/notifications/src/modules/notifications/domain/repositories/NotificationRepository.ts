@@ -1,3 +1,4 @@
+import { Notification } from '../entities/Notification';
 export abstract class NotificationRepository {
   abstract save(obj: Notification): Promise<void>;
   abstract get(id: string): Promise<Notification>;

@@ -1,3 +1,3 @@
-import { Sender } from "./Sender.port"
+import { Sender } from './Sender.port';
 
-export abstract SenderEmail extends Sender {}
+export abstract class SenderEmail extends Sender {}

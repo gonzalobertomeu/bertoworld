@@ -11,6 +11,18 @@ export interface NotificationCreateProp {
   sentAt: Date;
 }
 
+export interface NotificationReconstitueProps {
+  id: string;
+  recipientId: string;
+  type: string; //Value Object: Enum Type
+  channel: string; //Value Object: Enum Channel
+  status: string; //Value Object: Status Machine
+  payload: Record<string, any>;
+  sentAt: Date;
+  createdAt: Date;
+  readAt: Date | null;
+}
+
 export class Notification {
   private constructor(
     private _id: string,
@@ -23,6 +35,20 @@ export class Notification {
     private _createdAt: Date,
     private _readAt: Date | null,
   ) {}
+
+  static reconstitute(props: NotificationReconstitueProps) {
+    return new Notification(
+      props.id,
+      props.recipientId,
+      NotificationType.from(props.type),
+      NotificationChannel.from(props.channel),
+      NotificationStatus.from(props.status),
+      props.payload,
+      props.sentAt,
+      props.createdAt,
+      props.readAt,
+    );
+  }
 
   static create(create: NotificationCreateProp) {
     const now = new Date();
