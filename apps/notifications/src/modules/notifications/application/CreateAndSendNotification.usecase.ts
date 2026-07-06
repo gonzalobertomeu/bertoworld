@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { NotificationRepository } from '../domain/repositories/NotificationRepository';
 import { Sender } from '../domain/ports/Sender.port';
-import { NotificationTypeString } from '../domain/value-objects/NotificationType';
 import { Notification } from '../domain/entities/Notification';
 
 export interface CreateAndSendNotificationCommand {
   recipientId: string;
   payload: Record<string, any>;
   sentAt?: Date;
-  type: NotificationTypeString;
+  type: string;
 }
 
 @Injectable()

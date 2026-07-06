@@ -5,7 +5,7 @@ import { IdAlreadyTaken } from '../../errors/IdAlreadyTaken.error';
 
 export class NotificationRepositoryMock extends NotificationRepository {
   save = mock((obj: Notification) => {
-    if (obj.id === 'repeated') {
+    if (obj.recipientId === 'repeated') {
       return Promise.reject(new IdAlreadyTaken('faked error'));
     }
     return Promise.resolve();
