@@ -2,7 +2,7 @@ import { Notification } from '../../domain/entities/Notification';
 import { NotificationEntity } from './Notification.entity';
 
 export class NotificationMapper {
-  toDomain(entity: NotificationEntity): Notification {
+  static toDomain(entity: NotificationEntity): Notification {
     const domain = Notification.reconstitute({
       id: entity.id,
       recipientId: entity.recipientId,
@@ -16,7 +16,7 @@ export class NotificationMapper {
     });
     return domain;
   }
-  toOrm(domain: Notification): NotificationEntity {
+  static toOrm(domain: Notification): NotificationEntity {
     const orm = new NotificationEntity();
     orm.id = domain.id;
     orm.recipientId = domain.recipientId;
