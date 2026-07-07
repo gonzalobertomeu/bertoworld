@@ -2,6 +2,7 @@ import { mock } from 'bun:test';
 import { NotificationRepository } from '../NotificationRepository';
 import { Notification } from '../../entities/Notification';
 import { IdAlreadyTaken } from '../../errors/IdAlreadyTaken.error';
+import { NotFound } from '../../errors/NotFound.error';
 
 export class NotificationRepositoryMock extends NotificationRepository {
   save = mock((obj: Notification) => {
@@ -11,6 +12,9 @@ export class NotificationRepositoryMock extends NotificationRepository {
     return Promise.resolve();
   });
   get = mock((id: string) => {
+    if (id === 'failed') {
+      throw new NotFound(id, 'Notification');
+    }
     const noti = Notification.reconstitute({
       id,
       recipientId: crypto.randomUUID(),
@@ -25,6 +29,9 @@ export class NotificationRepositoryMock extends NotificationRepository {
     return Promise.resolve(noti);
   });
   findByRecipient = mock((recipientId: string) => {
+    if (recipientId === 'failed') {
+      return Promise.resolve([]);
+    }
     const notifs = ['ejemplo1', 'ejemplo2'].map((payloadString: string) => {
       return Notification.create({
         recipientId,
@@ -38,6 +45,7 @@ export class NotificationRepositoryMock extends NotificationRepository {
   });
   markAsRead = mock((obj: Notification) => {
     obj.read(new Date());
-    return Promise.resolve(obj);
+    const newObj = Notification.reconstitute(obj);
+    return Promise.resolve(newObj);
   });
 }

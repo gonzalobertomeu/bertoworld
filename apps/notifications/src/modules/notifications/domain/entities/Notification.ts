@@ -1,3 +1,4 @@
+import { AlreadyReaded } from '../errors/AlreadyReaded.error';
 import { InvalidReadDate } from '../errors/InvalidReadDate.error';
 import { NotificationChannel } from '../value-objects/NotificationChannel';
 import { NotificationStatus } from '../value-objects/NotificationStatus';
@@ -70,6 +71,9 @@ export class Notification {
   }
 
   public read(time: Date) {
+    if (this.readAt) {
+      throw new AlreadyReaded();
+    }
     if (this._sentAt.getTime() > time.getTime()) {
       throw new InvalidReadDate(time);
     }
